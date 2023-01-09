@@ -12,25 +12,20 @@ const puppeteer = require('puppeteer');
         return Array.from(document.querySelectorAll('span.Title > a'), el => el.textContent)
     });
 
-    await page.goto('https://www.imdb.com/', { waitUntil: 'networkidle0' });
-
     let ratings = [];
     let summaries = [];
     for (let index = 0; index < movieTitles.length; index++) {
-        // search imdb for film
-        await page.type('#suggestion-search', movieTitles[index], { delay: 100 });
+        // search tmdb for film
+        await page.goto('https://www.themoviedb.org/', { waitUntil: 'networkidle0' });
+        await page.type('#inner_search_v4', movieTitles[index], { delay: 100 });
         await Promise.all([
             page.waitForNavigation({ waitUntil: "load" }),
             page.keyboard.press("Enter")
         ]);
 
-        // const searchResults = await page.evaluate(() => {
-        //     return Array.from(document.querySelectorAll('a.ipc-metadata-list-summary-item__t'), el => el.textContent)
-        // });
-
         // click on first search result
         // brittle, but works for now
-        const searchResults = await page.$$('a.ipc-metadata-list-summary-item__t');
+        const searchResults = await page.$$('.image');
         if (searchResults.length > 0) {
             await Promise.all([
                 page.waitForNavigation({ waitUntil: "load" }),
@@ -41,24 +36,27 @@ const puppeteer = require('puppeteer');
         }
 
         // get film rating
-        const selector = '[data-testid="hero-rating-bar__aggregate-rating__score"]';
-        let ratingScoreParentElement = await page.$(selector);
-        let ratingScoreChildrenElements = await ratingScoreParentElement.$$(':scope > *');
-        let rating = await page.evaluate(el => el.textContent, ratingScoreChildrenElements[0]);
-        ratings.push(Number(rating));
+        // const selector = '[data-testid="hero-rating-bar__aggregate-rating__score"]';
+        // let ratingScoreParentElement = await page.$(selector);
+        // let ratingScoreChildrenElements = await ratingScoreParentElement.$$(':scope > *');
+        // let rating = await page.evaluate(el => el.textContent, ratingScoreChildrenElements[0]);
+        const rating = await page.$$eval(".user_score_chart", el => el.map(x => x.getAttribute("data-percent")));
+        ratings.push(rating[0].slice(0, -2) + "/100");
 
         // get summary
-        let elements = await page.$$('.ipc-html-content-inner-div');
-        let summary = await page.evaluate(el => el.textContent, elements[0]);
+        const summaryParentElem = await page.$('.overview');
+        const summaryChildElem = await summaryParentElem.$$(':scope > *');
+        const summary = await page.evaluate(el => el.textContent, summaryChildElem[0]);
         summaries.push(summary);
     }
-    console.log(summaries);
 
     // create array of objects
     let output = movieTitles.map((movie,i) => ({ movie, rating: ratings[i] }));
-    console.log(output);
-    // sort
-    output.sort((a, b) => a.rating - b.rating);
+
+    // more formatting
+    const newOutput = output.map((item, i)=>({ ...item, Summary: summaries[i] }));
+    console.log(newOutput)
+
 
     // end
     await browser.close();
