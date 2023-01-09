@@ -1,0 +1,17 @@
+{
+  "name": "banshee",
+  "version": "1.0.0",
+  "description": "film scrape for my local cinema. uses puppeteer.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "puppeteer"
+  ],
+  "author": "ezra mizrahi ezra.mizrahi@hey.com",
+  "license": "ISC",
+  "dependencies": {
+    "puppeteer": "^19.5.0"
+  }
+}
