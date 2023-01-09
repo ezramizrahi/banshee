@@ -35,11 +35,6 @@ const puppeteer = require('puppeteer');
             throw new Error('film not found');
         }
 
-        // get film rating
-        // const selector = '[data-testid="hero-rating-bar__aggregate-rating__score"]';
-        // let ratingScoreParentElement = await page.$(selector);
-        // let ratingScoreChildrenElements = await ratingScoreParentElement.$$(':scope > *');
-        // let rating = await page.evaluate(el => el.textContent, ratingScoreChildrenElements[0]);
         const rating = await page.$$eval(".user_score_chart", el => el.map(x => x.getAttribute("data-percent")));
         ratings.push(rating[0].slice(0, -2) + "/100");
 
@@ -50,13 +45,9 @@ const puppeteer = require('puppeteer');
         summaries.push(summary);
     }
 
-    // create array of objects
-    let output = movieTitles.map((movie,i) => ({ movie, rating: ratings[i] }));
-
-    // more formatting
-    const newOutput = output.map((item, i)=>({ ...item, Summary: summaries[i] }));
-    console.log(newOutput)
-
+    // create array of objects containing film title and rating
+    let output = movieTitles.map((movie,i) => ({ movie, rating: ratings[i], summary: summaries[i] }));
+    console.log(output)
 
     // end
     await browser.close();
