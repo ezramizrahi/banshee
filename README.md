@@ -28,6 +28,11 @@ To get a local copy up and running follow these steps:
 2. run `npm install`
 3. run `node index.js`
 
+## TO DO
+
+* github cron jobs are unreliable - figure out another option
+* host API
+
 ## Contact
 
 Ezra Mizrahi - ezra.mizrahi@hey.com
