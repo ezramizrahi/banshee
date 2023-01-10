@@ -2,7 +2,7 @@ const puppeteer = require('puppeteer');
 const fs = require('fs');
 
 (async () => {
-    const browser = await puppeteer.launch({ headless: false });
+    const browser = await puppeteer.launch({ headless: true });
     const page = await browser.newPage();
     await page.setViewport({ width: 0, height: 0});
     await page.setJavaScriptEnabled(false);
@@ -48,7 +48,7 @@ const fs = require('fs');
 
     // create array of objects containing film title and rating
     let output = movieTitles.map((movie,i) => ({ movie, rating: ratings[i], summary: summaries[i] }));
-    console.log(output)
+    console.log('output', output);
 
     // end
     await browser.close();

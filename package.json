@@ -5,8 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "scrape": "node index.js",
-    "server": "nodemon server.js"
+    "scrape": "node index.js"
   },
   "keywords": [
     "puppeteer"
