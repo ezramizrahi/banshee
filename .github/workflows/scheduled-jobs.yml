@@ -1,6 +1,9 @@
 name: Trigger script run on a CRON schedule
 
 on:
+  push:
+    branches:
+      - main
   schedule:
     # Run twice a day at 8:30 and 13:30 UTC (see https://crontab.guru)
     - cron:  '30 8,13 * * *'
