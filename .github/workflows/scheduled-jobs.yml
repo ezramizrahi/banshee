@@ -20,5 +20,7 @@ jobs:
       - run: npm ci
       - run: npm run scrape
       - run: npm run seed
+        env:
+          ATLAS_URI: ${{ secrets.ATLAS_URI }}
       
       
