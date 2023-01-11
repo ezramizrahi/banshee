@@ -34,7 +34,10 @@ const fs = require('fs');
                 await searchResults[0].click()
             ]);
         } else {
-            throw new Error(`${movieTitles[index]} not found`);
+            console.log(`${movieTitles[index]} not found`);
+            movieTitles = movieTitles.filter(item => item !== movieTitles[index]);
+            continue;
+            // throw new Error(`${movieTitles[index]} not found`);
         }
 
         const rating = await page.$$eval(".user_score_chart", el => el.map(x => x.getAttribute("data-percent")));
