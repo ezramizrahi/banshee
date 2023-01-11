@@ -9,7 +9,7 @@ const fs = require('fs');
 
     await page.goto('https://www.ritzcinemas.com.au/now-showing', { waitUntil: 'networkidle0' });
 
-    const movieTitles = await page.evaluate(() => {
+    let movieTitles = await page.evaluate(() => {
         return Array.from(document.querySelectorAll('span.Title > a'), el => el.textContent)
     });
     console.log(movieTitles);
