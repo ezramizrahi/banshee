@@ -1,4 +1,4 @@
-name: Trigger script run on a CRON schedule
+name: Film scrape
 
 on:
   push:
@@ -9,7 +9,7 @@ on:
     - cron:  '30 8,13 * * *'
 
 jobs:
-  run_puppeteer_script:
+  scrape_and_seed_mongodb:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -19,4 +19,6 @@ jobs:
           node-version: '16.3'
       - run: npm ci
       - run: npm run scrape
+      - run: npm run seed
+      
       
