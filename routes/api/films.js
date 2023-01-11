@@ -18,13 +18,4 @@ router.get('/', (req, res) => {
         .catch(err => console.log(err));
 });
 
-// @route POST api/films
-// @description add/save film
-// @access Public
-router.post('/', (req, res) => {
-    Film.create(req.body)
-        .then(film => res.json({ msg: 'Film added successfully' }))
-        .catch(err => console.log(err));
-});
-
 module.exports = router;
