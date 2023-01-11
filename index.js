@@ -12,6 +12,7 @@ const fs = require('fs');
     const movieTitles = await page.evaluate(() => {
         return Array.from(document.querySelectorAll('span.Title > a'), el => el.textContent)
     });
+    console.log(movieTitles);
 
     let ratings = [];
     let summaries = [];
@@ -33,7 +34,7 @@ const fs = require('fs');
                 await searchResults[0].click()
             ]);
         } else {
-            throw new Error('film not found');
+            throw new Error(`${movieTitles[index]} not found`);
         }
 
         const rating = await page.$$eval(".user_score_chart", el => el.map(x => x.getAttribute("data-percent")));
