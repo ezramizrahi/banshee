@@ -35,18 +35,20 @@ const fs = require('fs');
             ]);
         } else {
             console.log(`${movieTitles[index]} not found`);
-            movieTitles = movieTitles.filter(item => item !== movieTitles[index]);
+            ratings.push('Not found');
+            summaries.push('Not found');
+            // movieTitles = movieTitles.filter(item => item !== movieTitles[index]);
             continue;
             // throw new Error(`${movieTitles[index]} not found`);
         }
 
-        const rating = await page.$$eval(".user_score_chart", el => el.map(x => x.getAttribute("data-percent")));
+        let rating = await page.$$eval(".user_score_chart", el => el.map(x => x.getAttribute("data-percent")));
         ratings.push(rating[0].slice(0, -2) + "/100");
 
         // get summary
-        const summaryParentElem = await page.$('.overview');
-        const summaryChildElem = await summaryParentElem.$$(':scope > *');
-        const summary = await page.evaluate(el => el.textContent, summaryChildElem[0]);
+        let summaryParentElem = await page.$('.overview');
+        let summaryChildElem = await summaryParentElem.$$(':scope > *');
+        let summary = await page.evaluate(el => el.textContent, summaryChildElem[0]);
         summaries.push(summary);
     }
 
