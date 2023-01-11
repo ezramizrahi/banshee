@@ -9,7 +9,7 @@ on:
     - cron:  '30 8,13 * * *'
 
 jobs:
-  scrape_and_seed_mongodb:
+  scrape_films_and_seed_mongodb:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
