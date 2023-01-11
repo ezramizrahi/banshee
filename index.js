@@ -34,9 +34,9 @@ const fs = require('fs');
             ]);
         } else {
             console.log(`${movieTitles[index]} not found`);
-            ratings.push('Rating not available');
-            summaries.push('Summary not available');
-            // finish here and continue with the next iteration
+            ratings.push(`Rating for ${movieTitles[index]} not found`);
+            summaries.push(`Summary for ${movieTitles[index]} not found`);
+            // Finish here and continue with the next iteration
             continue;
         }
 
@@ -49,13 +49,11 @@ const fs = require('fs');
         let summary = await page.evaluate(el => el.textContent, summaryChildElem[0]);
         summaries.push(summary);
     }
+    // Close the browser
+    await browser.close();
 
     // Create an array of objects containing film title and rating
     let output = movieTitles.map((movie,i) => ({ movie, rating: ratings[i], summary: summaries[i] }));
-    console.log('output', output);
-
-    // end
-    await browser.close();
 
     // Write json file
     const outputToJSON = JSON.stringify(output);
