@@ -6,18 +6,17 @@ const fs = require('fs');
     const page = await browser.newPage();
     await page.setViewport({ width: 0, height: 0});
     await page.setJavaScriptEnabled(false);
-
     await page.goto('https://www.ritzcinemas.com.au/now-showing', { waitUntil: 'networkidle0' });
 
+    // Store movie titles from the Ritz now-showing page
     let movieTitles = await page.evaluate(() => {
         return Array.from(document.querySelectorAll('span.Title > a'), el => el.textContent)
     });
-    console.log(movieTitles);
 
     let ratings = [];
     let summaries = [];
     for (let index = 0; index < movieTitles.length; index++) {
-        // search tmdb for film
+        // Search themoviedb for each film
         await page.goto('https://www.themoviedb.org/', { waitUntil: 'networkidle0' });
         await page.type('#inner_search_v4', movieTitles[index], { delay: 100 });
         await Promise.all([
@@ -25,7 +24,7 @@ const fs = require('fs');
             page.keyboard.press("Enter")
         ]);
 
-        // click on first search result
+        // Click on the first search result
         // brittle, but works for now
         const searchResults = await page.$$('.image');
         if (searchResults.length > 0) {
@@ -35,30 +34,30 @@ const fs = require('fs');
             ]);
         } else {
             console.log(`${movieTitles[index]} not found`);
-            ratings.push('Not found');
-            summaries.push('Not found');
-            // movieTitles = movieTitles.filter(item => item !== movieTitles[index]);
+            ratings.push('Rating not available');
+            summaries.push('Summary not available');
+            // finish here and continue with the next iteration
             continue;
-            // throw new Error(`${movieTitles[index]} not found`);
         }
 
+        // Get film rating
         let rating = await page.$$eval(".user_score_chart", el => el.map(x => x.getAttribute("data-percent")));
         ratings.push(rating[0].slice(0, -2) + "/100");
-
-        // get summary
+        // Get film summary
         let summaryParentElem = await page.$('.overview');
         let summaryChildElem = await summaryParentElem.$$(':scope > *');
         let summary = await page.evaluate(el => el.textContent, summaryChildElem[0]);
         summaries.push(summary);
     }
 
-    // create array of objects containing film title and rating
+    // Create an array of objects containing film title and rating
     let output = movieTitles.map((movie,i) => ({ movie, rating: ratings[i], summary: summaries[i] }));
     console.log('output', output);
 
     // end
     await browser.close();
 
+    // Write json file
     const outputToJSON = JSON.stringify(output);
     fs.writeFile('./data.json', outputToJSON, (err) => {
         if (!err) {
