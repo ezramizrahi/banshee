@@ -54,6 +54,7 @@ const fs = require('fs');
 
     // Create an array of objects containing film title and rating
     let output = movieTitles.map((movie,i) => ({ movie, rating: ratings[i], summary: summaries[i] }));
+    console.log('output', output);
 
     // Write json file
     const outputToJSON = JSON.stringify(output);

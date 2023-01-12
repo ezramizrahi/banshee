@@ -19,7 +19,6 @@ const data = require('./data.json');
 
 // const fakeFilmSeedData = createFakeFilms(5);
 // console.log(fakeFilmSeedData)
-
 mongoose.connect(
     connectionString, {
         useNewUrlParser: true, useUnifiedTopology: true
