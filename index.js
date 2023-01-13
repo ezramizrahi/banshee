@@ -6,7 +6,7 @@ const fs = require('fs');
     const page = await browser.newPage();
     await page.setViewport({ width: 0, height: 0});
     await page.setJavaScriptEnabled(false);
-    await page.goto('https://www.ritzcinemas.com.au/now-showing', { waitUntil: 'networkidle0' });
+    await page.goto('https://www.ritzcinemas.com.au/now-showing', { waitUntil: 'load' });
 
     // Store movie titles from the Ritz now-showing page
     let movieTitles = await page.evaluate(() => {
@@ -17,7 +17,7 @@ const fs = require('fs');
     let summaries = [];
     for (let index = 0; index < movieTitles.length; index++) {
         // Search themoviedb for each film
-        await page.goto('https://www.themoviedb.org/', { waitUntil: 'networkidle0' });
+        await page.goto('https://www.themoviedb.org/', { waitUntil: 'load' });
         await page.type('#inner_search_v4', movieTitles[index], { delay: 100 });
         await Promise.all([
             page.waitForNavigation({ waitUntil: "load" }),
