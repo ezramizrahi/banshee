@@ -8,6 +8,5 @@
 (println "BABASHKA")
 (when (fs/exists? "data.json")
   (println "File exists")
-  let [parsedjson (json/parse-string (slurp "data.json") true)])
-println("parsed json" parsedjson)
+  (println (json/parse-string (slurp "data.json") true)))
 (fs/cwd)
