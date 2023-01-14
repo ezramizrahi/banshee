@@ -3,7 +3,7 @@
 (ns bb-test-script
   (:require
    [babashka.fs :as fs]
-   [babashka.hiccup :as html]
+   [hiccup.core :as html]
    [cheshire.core :as json]))
 
 (when (fs/exists? "data.json")
