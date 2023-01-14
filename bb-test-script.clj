@@ -5,7 +5,6 @@
    [babashka.fs :as fs]
    [cheshire.core :as json]))
 
-(println "BABASHKA")
 (when (fs/exists? "data.json")
   (println "File exists")
   (println (json/parse-string (slurp "data.json") true)))
