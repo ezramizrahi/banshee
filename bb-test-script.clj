@@ -3,10 +3,10 @@
 (ns bb-test-script
   (:require
    [babashka.fs :as fs]
-   [babashka.curl :as curl]
    [cheshire.core :as json]))
 
 (println "BABASHKA")
-(when (fs/exists? "package.json")
-  (println "File exists"))
+(when (fs/exists? "data.json")
+  (println "File exists")
+  (json/parse-string (slurp "data.json") true))
 (fs/cwd)
