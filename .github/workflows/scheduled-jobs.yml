@@ -12,15 +12,27 @@ jobs:
   scrape_films_and_seed_mongodb:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v3
       - name: Use Node.js 16.3
         uses: actions/setup-node@v3
         with:
           node-version: '16.3'
-      - run: npm ci
-      - run: npm run scrape
-      - run: npm run seed
+      - name: Clean install
+        run: npm ci
+      - name: Scrape now showing films
+        run: npm run scrape
+      - name: Exec BABASHKA script
+        uses: tzafrirben/babashka-docker-action@v1
+        id: bb_script
+        with:
+          bb_src: './bb-test-script.clj'
+      - name: Get BABASHKA script output
+          run: echo "${{ steps.bb_script.outputs.bb_out }}"
+      - name: Seed DB
+        run: npm run seed
         env:
           ATLAS_URI: ${{ secrets.ATLAS_URI }}
+      
       
       

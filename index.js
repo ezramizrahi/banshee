@@ -26,6 +26,7 @@ const fs = require('fs');
 
         // Click on the first search result
         // brittle, but works for now
+        // else add a default rating and summary
         const searchResults = await page.$$('.image');
         if (searchResults.length > 0) {
             await Promise.all([

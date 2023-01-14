@@ -12,3 +12,6 @@
 .env.production.local
 
 npm-debug.log*
+
+.clj-kondo
+.lsp
