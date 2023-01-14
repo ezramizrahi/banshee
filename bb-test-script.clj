@@ -4,7 +4,7 @@
   (:require
    [babashka.fs :as fs]
    [hiccup.core :as hiccup]
-   [clojure.data.json :as json]))
+   [data.json :as json]))
 
 (when (fs/exists? "data.json")
   (println "File exists")
