@@ -8,6 +8,6 @@
 
 (when (fs/exists? "data.json")
   (println "File exists")
-  (html [:span {:class "foo"} "bar"])
+  (hiccup [:span {:class "foo"} "bar"])
   (println (json/parse-string (slurp "data.json") true)))
 (fs/cwd)
