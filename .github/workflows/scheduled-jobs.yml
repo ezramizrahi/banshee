@@ -27,8 +27,6 @@ jobs:
         id: bb_script
         with:
           bb_src: './bb-test-script.clj'
-      - name: Get BABASHKA script output
-          run: echo "${{ steps.bb_script.outputs.bb_out }}"
       - name: Seed DB
         run: npm run seed
         env:
