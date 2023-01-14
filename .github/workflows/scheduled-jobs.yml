@@ -26,7 +26,7 @@ jobs:
         uses: tzafrirben/babashka-docker-action@v1.1
         id: bb_script
         with:
-          bb_src: './bb-test-script.clj'
+          bb_src: 'bb-test-script.clj'
       - name: Seed DB
         run: npm run seed
         env:
