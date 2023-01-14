@@ -1,9 +1,12 @@
 #!/usr/bin/env bb
 
-(ns bb-test-script.core
-  (:require [clojure.string :as str]
-            [clojure.java.shell :as shell]
-            [clojure.tools.cli :as tools.cli]))
+(ns bb-test-script
+  (:require
+   [babashka.fs :as fs]
+   [babashka.curl :as curl]
+   [cheshire.core :as json]))
 
 (println "BABASHKA")
-(prn *file*)
+(when (fs/exists? "package.json")
+  (println "File exists"))
+(fs/cwd)
