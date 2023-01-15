@@ -11,7 +11,6 @@ const handler = async (event) => {
         const results = await collection.find({}).limit(30).toArray();;
         return {
             statusCode: 200,
-            timestamp: Date.now(),
             body: JSON.stringify(results),
         }
     } catch (error) {
