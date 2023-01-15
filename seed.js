@@ -5,38 +5,42 @@ const Film = require('./models/Film');
 const connectionString = process.env.ATLAS_URI;
 const data = require('./data.json');
 
-// const createFakeFilm = () => {
-//     return {
-//         movie: faker.lorem.words(3),
-//         summary: faker.lorem.words(10),
-//         rating: faker.random.word(),
-//     };
-// };
+const { MongoClient } = require("mongodb");
 
-// const createFakeFilms = (numFilms = 5) => {
-//     return Array.from({ length: numFilms }, createFakeFilm);
-// };
+const mongoClient = new MongoClient(process.env.ATLAS_URI);
 
-// const fakeFilmSeedData = createFakeFilms(5);
-// console.log(fakeFilmSeedData)
-
-mongoose.connect(
-    connectionString, {
-        useNewUrlParser: true, useUnifiedTopology: true
-    })
-    .then(() => {
-        console.log('connection open');
-    })
-    .catch((err) => {
-        console.log(err);
-    });
+const clientPromise = mongoClient.connect();
 
 const seedDB = async () => {
-    await Film.deleteMany({});
-    await Film.insertMany(data);
+    try {
+        const database = (await clientPromise).db(process.env.MONGODB_DATABASE);
+        const collection = database.collection(process.env.MONGODB_COLLECTION);
+        await collection.deleteMany({});
+        await collection.insertMany(data)
+    } catch (error) {
+        console.log('error: ', error)
+    }
 };
+seedDB();
 
-seedDB().then(() => {
-    console.log('DB seeded with scraped data!');
-    mongoose.connection.close();
-});
+
+// mongoose.connect(
+//     connectionString, {
+//         useNewUrlParser: true, useUnifiedTopology: true
+//     })
+//     .then(() => {
+//         console.log('connection open');
+//     })
+//     .catch((err) => {
+//         console.log(err);
+//     });
+
+// const seedDB = async () => {
+//     await Film.deleteMany({});
+//     await Film.insertMany(data);
+// };
+
+// seedDB().then(() => {
+//     console.log('DB seeded with scraped data!');
+//     mongoose.connection.close();
+// });
