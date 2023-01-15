@@ -15,5 +15,6 @@ npm-debug.log*
 
 .clj-kondo
 .lsp
+
 # Local Netlify folder
 .netlify
