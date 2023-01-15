@@ -4,7 +4,6 @@ const Film = require('./models/Film');
 const data = require('./data.json');
 const connectionString = process.env.ATLAS_URI;
 
-
 mongoose.connect(
     connectionString, {
         useNewUrlParser: true, useUnifiedTopology: true
