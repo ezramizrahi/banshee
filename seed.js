@@ -1,8 +1,8 @@
 require('dotenv').config();
-const mongoose = require('mongoose');
+// const mongoose = require('mongoose');
 const { faker } = require('@faker-js/faker');
-const Film = require('./models/Film');
-const connectionString = process.env.ATLAS_URI;
+// const Film = require('./models/Film');
+// const connectionString = process.env.ATLAS_URI;
 const data = require('./data.json');
 
 const { MongoClient } = require("mongodb");
@@ -16,9 +16,9 @@ const seedDB = async () => {
         const database = (await clientPromise).db(process.env.MONGODB_DATABASE);
         const collection = database.collection(process.env.MONGODB_COLLECTION);
         await collection.deleteMany({});
-        await collection.insertMany(data)
+        await collection.insertMany(data);
     } catch (error) {
-        console.log('error: ', error)
+        console.log(error)
     }
 };
 seedDB();
