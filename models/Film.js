@@ -12,6 +12,10 @@ const FilmSchema = new mongoose.Schema({
     summary: {
         type: String,
         required: true
+    },
+    times: {
+        type: Array,
+        required: true
     }
 });
 

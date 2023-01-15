@@ -2,7 +2,7 @@ const puppeteer = require('puppeteer');
 const fs = require('fs');
 
 (async () => {
-    const browser = await puppeteer.launch({ headless: true });
+    const browser = await puppeteer.launch({ headless: false });
     const page = await browser.newPage();
     await page.setViewport({ width: 0, height: 0});
     await page.setJavaScriptEnabled(false);
@@ -12,6 +12,26 @@ const fs = require('fs');
     let movieTitles = await page.evaluate(() => {
         return Array.from(document.querySelectorAll('span.Title > a'), el => el.textContent)
     });
+
+    // Get today's show times
+    let nowShowingSessions = [];
+    for (let index = 0; index < movieTitles.length; index++) {
+        await page.goto('https://www.ritzcinemas.com.au/now-showing', { waitUntil: 'load' });
+        let titles = await page.$$('span.Title > a');
+        await Promise.all([
+            page.waitForNavigation({ waitUntil: "load" }),
+            titles[index].click(),
+        ]);
+
+        // Check for session count today
+        let sessionsParent = await page.$('.Sessions');
+        let sessionsChildren = await sessionsParent.$$(':scope > *');
+        let sessionsLength = sessionsChildren.length;
+        let allSessions = await page.evaluate(() => {
+            return Array.from(document.querySelectorAll('span.Time'), el => el.textContent)
+        });
+        nowShowingSessions.push(allSessions.slice(0, sessionsLength));
+    }
 
     let ratings = [];
     let summaries = [];
@@ -54,7 +74,7 @@ const fs = require('fs');
     await browser.close();
 
     // Create an array of objects containing film title and rating
-    let output = movieTitles.map((movie,i) => ({ movie, rating: ratings[i], summary: summaries[i] }));
+    let output = movieTitles.map((movie,i) => ({ movie, rating: ratings[i], summary: summaries[i], times: nowShowingSessions[i] }));
     console.log('output', output);
 
     // Write json file
