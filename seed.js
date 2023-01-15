@@ -37,6 +37,6 @@ const seedDB = async () => {
 };
 
 seedDB().then(() => {
-    console.log('seeded!');
+    console.log('DB seeded with scraped data!');
     mongoose.connection.close();
 });
