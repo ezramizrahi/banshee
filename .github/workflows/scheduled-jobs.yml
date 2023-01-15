@@ -20,14 +20,14 @@ jobs:
           node-version: '16.3'
       - name: Clean install
         run: npm ci
-      - name: Scrape now showing films
+      - name: Scrape
         run: npm run scrape
-      - name: Exec BABASHKA script
+      - name: Exec BABASHKA
         uses: tzafrirben/babashka-docker-action@v1.1
         id: bb_script
         with:
           bb_src: 'bb-test-script.clj'
-      - name: Get BABASHKA script output
+      - name: Get BABASHKA output
         run: echo "${{ steps.bb_script.outputs.bb_out }}"
       - name: Seed DB
         run: npm run seed
