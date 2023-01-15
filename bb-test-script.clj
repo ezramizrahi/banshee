@@ -7,5 +7,7 @@
    [hiccup.core :as hiccup]
    [cheshire.core :as json]))
 
-(def resp (curl/get "https://banshee.netlify.app/.netlify/functions/get_movies"))
-(println "hello")
+(def project-root (-> *file* babashka.fs/parent babashka.fs/parent))
+
+;; Print root folder
+(println (str project-root))
