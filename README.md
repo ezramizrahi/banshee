@@ -13,7 +13,7 @@
 
 ## About
 
-Scraping the 'now-playing' section of my local movie theatre's website. It doesn't contain information on genre or rating, so I use Puppeteer to grab the 'now playing' film titles, and then scrape further information for each film from TMDB, e.g. rating and summary.
+Scraping the 'now-playing' section of my local movie theatre's website. It doesn't contain any rating information or a detailed summary, so I use Puppeteer to grab the 'now playing' film titles and today's show times, and then scrape further information for each film from TMDB, e.g. rating and summary.
 
 ### Built With
 
