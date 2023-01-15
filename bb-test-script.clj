@@ -15,4 +15,4 @@
   ;; (spit "textfile.txt" (interpose "\n" movies))
   ;; (println (json/parse-string (slurp "data.json") true)))
 (def resp (curl/get "https://banshee.netlify.app/.netlify/functions/get_movies"))
-(println (json/parse-string (:body resp))) ;;=> {"code" 200, "description" "OK"}
+(println (json/parse-string resp true))

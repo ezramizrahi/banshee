@@ -1,8 +1,8 @@
 require('dotenv').config();
 const mongoose = require('mongoose');
 const Film = require('./models/Film');
-const connectionString = process.env.ATLAS_URI;
 const data = require('./data.json');
+const connectionString = process.env.ATLAS_URI;
 
 
 mongoose.connect(
