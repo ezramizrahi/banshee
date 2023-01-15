@@ -8,4 +8,4 @@
    [cheshire.core :as json]))
 
 (def resp (curl/get "https://banshee.netlify.app/.netlify/functions/get_movies"))
-(println (json/parse-string resp true))
+(println "hello")

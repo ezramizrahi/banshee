@@ -30,9 +30,9 @@ To get a local copy up and running follow these steps:
 
 ## TO DO
 
-- :white_check_mark: Build functioning scraper
-- :white_check_mark: Setup GitHub Workflow
-- :white_check_mark: Create Netlify Function
+- [x] Build functioning scraper
+- [x] Setup GitHub Workflow
+- [x] Create Netlify Function
 
 ## Contact
 

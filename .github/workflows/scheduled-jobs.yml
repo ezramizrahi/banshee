@@ -33,8 +33,6 @@ jobs:
         id: bb_script
         with:
           bb_src: 'bb-test-script.clj'
-      - name: Get BABASHKA output
-        run: echo "${{ steps.bb_script.outputs.bb_out }}"
       
       
       
