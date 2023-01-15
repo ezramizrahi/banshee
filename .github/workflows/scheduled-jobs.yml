@@ -22,6 +22,12 @@ jobs:
         run: npm ci
       - name: Scrape
         run: npm run scrape
+      - name: Seed DB
+        run: npm run seed
+        env:
+          ATLAS_URI: ${{ secrets.ATLAS_URI }}
+          MONGODB_DATABASE: ${{ secrets.MONGODB_DATABASE }}
+          MONGODB_COLLECTION: ${{ secrets.MONGODB_COLLECTION }}
       - name: Exec BABASHKA
         uses: tzafrirben/babashka-docker-action@v1.1
         id: bb_script
@@ -29,12 +35,6 @@ jobs:
           bb_src: 'bb-test-script.clj'
       - name: Get BABASHKA output
         run: echo "${{ steps.bb_script.outputs.bb_out }}"
-      - name: Seed DB
-        run: npm run seed
-        env:
-          ATLAS_URI: ${{ secrets.ATLAS_URI }}
-          MONGODB_DATABASE: ${{ secrets.MONGODB_DATABASE }}
-          MONGODB_COLLECTION: ${{ secrets.MONGODB_COLLECTION }}
       
       
       
