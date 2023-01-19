@@ -5,8 +5,8 @@ on:
     branches:
       - main
   schedule:
-    # Run twice a day at 8:30 and 13:30 UTC (see https://crontab.guru)
-    - cron:  '30 8,13 * * *'
+    # Run twice a day at 1:30 and 15:30 UTC (see https://crontab.guru)
+    - cron:  '30 1,15 * * *'
 
 jobs:
   scrape_films_and_seed_mongodb:
