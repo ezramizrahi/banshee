@@ -8,7 +8,7 @@ const handler = async (event) => {
     try {
         const database = (await clientPromise).db(process.env.MONGODB_DATABASE);
         const collection = database.collection(process.env.MONGODB_COLLECTION);
-        const results = await collection.find({}).limit(30).toArray();;
+        const results = await collection.find({}).limit(30).toArray();
         return {
             statusCode: 200,
             headers: {
