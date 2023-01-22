@@ -11,6 +11,10 @@ const handler = async (event) => {
         const results = await collection.find({}).limit(30).toArray();;
         return {
             statusCode: 200,
+            headers: {
+                /* Required for CORS support to work */
+                'Access-Control-Allow-Origin': '*'
+            },
             body: JSON.stringify(results),
         }
     } catch (error) {
