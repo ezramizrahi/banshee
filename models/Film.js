@@ -16,6 +16,11 @@ const FilmSchema = new mongoose.Schema({
     times: {
         type: Array,
         required: true
+    },
+    date: { 
+        type: Date, 
+        default: Date.now,
+        required: true
     }
 });
 
