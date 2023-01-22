@@ -23,6 +23,8 @@ jobs:
         run: npm ci
       - name: Scrape
         run: npm run scrape
+      - name: Test
+        run: npm run test
       - name: Seed DB
         run: npm run seed
         env:
