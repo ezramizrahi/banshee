@@ -17,9 +17,8 @@ const FilmSchema = new mongoose.Schema({
         type: Array,
         required: true
     },
-    date: { 
-        type: Date, 
-        default: Date.now,
+    scraped_at: { 
+        type: String,
         required: true
     }
 });

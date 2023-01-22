@@ -77,8 +77,9 @@ const fs = require('fs');
     // Close the browser
     await browser.close();
 
+    const scrapedAt = new Date().toISOString().split("T")[0];
     // Create an array of objects containing film title and rating
-    let output = movieTitles.map((movie,i) => ({ movie, rating: ratings[i], summary: summaries[i], times: nowShowingSessions[i], date: Date.now() }));
+    let output = movieTitles.map((movie,i) => ({ movie, rating: ratings[i], summary: summaries[i], times: nowShowingSessions[i], scraped_at: scrapedAt }));
     console.log('output', output);
 
     // Write json file
