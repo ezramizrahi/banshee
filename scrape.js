@@ -2,7 +2,7 @@ const puppeteer = require('puppeteer');
 const fs = require('fs');
 
 (async () => {
-    const browser = await puppeteer.launch({ headless: true });
+    const browser = await puppeteer.launch({ headless: false });
     const page = await browser.newPage();
     await page.setViewport({ width: 0, height: 0});
     await page.setJavaScriptEnabled(false);
@@ -24,13 +24,17 @@ const fs = require('fs');
         ]);
 
         // Check for session count today
-        let sessionsParent = await page.$('.Sessions');
-        let sessionsChildren = await sessionsParent.$$(':scope > *');
-        let sessionsLength = sessionsChildren.length;
-        let allSessions = await page.evaluate(() => {
-            return Array.from(document.querySelectorAll('span.Time'), el => el.textContent)
-        });
-        nowShowingSessions.push(allSessions.slice(0, sessionsLength));
+        if (await page.$('.Sessions')) {
+            let sessionsParent = await page.$('.Sessions');
+            let sessionsChildren = await sessionsParent.$$(':scope > *');
+            let sessionsLength = sessionsChildren.length;
+            let allSessions = await page.evaluate(() => {
+                return Array.from(document.querySelectorAll('span.Time'), el => el.textContent)
+            });
+            nowShowingSessions.push(allSessions.slice(0, sessionsLength));
+        } else {
+            nowShowingSessions.unshift(['no sessions left today'])
+        }
     }
 
     let ratings = [];
@@ -74,7 +78,7 @@ const fs = require('fs');
     await browser.close();
 
     // Create an array of objects containing film title and rating
-    let output = movieTitles.map((movie,i) => ({ movie, rating: ratings[i], summary: summaries[i], times: nowShowingSessions[i] }));
+    let output = movieTitles.map((movie,i) => ({ movie, rating: ratings[i], summary: summaries[i], times: nowShowingSessions[i], date: Date.now() }));
     console.log('output', output);
 
     // Write json file
