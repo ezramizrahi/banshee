@@ -24,11 +24,11 @@ jobs:
       - name: Scrape
         run: npm run scrape
       - name: Validate JSON
-        id: json_validation
+        id: validateJSON
         run: |
           npm run test
       - name: Seed DB
-        if: steps.json_validation.outcome == 'success'
+        if: steps.validateJSON.outcome == 'success'
         run: npm run seed
         env:
           ATLAS_URI: ${{ secrets.ATLAS_URI }}
