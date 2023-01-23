@@ -28,10 +28,11 @@ This data is then stored in a MongoDB Atlas collection, and exposed via a Netlif
 
 To get a local copy up and running follow these steps:
 
-1. clone the repo
+1. clone the repo (you will need a `.env` file with your own MongoDB secrets)
 2. run `npm install`
-3. run `npm run scrape` to scrape
-4. run `npm run seed` to clean and reseed the db with the latest films
+3. run `npm run scrape` to scrape the movie data and save it to a `data.json`
+4. run `npm run test` to test that `data.json` has the expected keys and that the values are of the expected types
+5. run `npm run seed` to clean and reseed the db with the latest films
 
 ## TO DO
 
@@ -41,7 +42,7 @@ To get a local copy up and running follow these steps:
 - [x] Add Postman tests (may remove these in the future)
 - [ ] Hook up a FE to display results
 - [ ] Find a reason to use Babashka, otherwise get rid of it
-- [ ] Update on push branch config
+- [x] Update on push branch config
 
 ## Contact
 
