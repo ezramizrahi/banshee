@@ -41,7 +41,6 @@ To get a local copy up and running follow these steps:
 - [x] Create Netlify Function
 - [x] Add Postman tests (may remove these in the future)
 - [ ] Hook up a FE to display results
-- [ ] Find a reason to use Babashka, otherwise get rid of it
 - [x] Update on push branch config
 
 ## Contact
