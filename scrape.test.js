@@ -1,26 +1,31 @@
 const data = require('./data.json');
 
-test('that movie key exists in all objs', () => {
-    let expectedVal = data.every(d => 'movie' in d && typeof d.movie === "string");
-    expect(expectedVal).toBe(true);
+test('movie key value is a string', () => {
+    data.forEach(d => {
+        expect(d.movie).toEqual(expect.any(String));
+    });
 });
 
-test('that rating key exists in all objs', () => {
-    let expectedVal = data.every(d => 'rating' in d && typeof d.rating === "string");
-    expect(expectedVal).toBe(true);
+test('rating key value is a string', () => {
+    data.forEach(d => {
+        expect(d.rating).toEqual(expect.any(String));
+    });
 });
 
-test('that summary key exists in all objs', () => {
-    let expectedVal = data.every(d => 'summary' in d && typeof d.summary === "string");
-    expect(expectedVal).toBe(true);
+test('summary key value is a string', () => {
+    data.forEach(d => {
+        expect(d.summary).toEqual(expect.any(String));
+    });
 });
 
-test('that times key exists in all objs', () => {
-    let expectedVal = data.every(d => 'times' in d && Array.isArray(d.times));
-    expect(expectedVal).toBe(true);
+test('times key value is an array of strings', () => {
+    data.forEach(d => {
+        expect(d.times).toEqual(expect.any(Array));
+    });
 });
 
 test('that scraped_at key exists in all objs', () => {
-    let expectedVal = data.every(d => 'scraped_at' in d && typeof d.scraped_at === "string");
-    expect(expectedVal).toBe(true);
+    data.forEach(d => {
+        expect(d.scraped_at).toEqual(expect.any(String));
+    });
 });
