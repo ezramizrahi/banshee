@@ -23,9 +23,12 @@ jobs:
         run: npm ci
       - name: Scrape
         run: npm run scrape
-      - name: Test returned json has correct schema
-        run: npm run test
+      - name: Validate JSON
+        id: json_validation
+        run: |
+          npm run test
       - name: Seed DB
+        if: steps.json_validation.outcome == 'success'
         run: npm run seed
         env:
           ATLAS_URI: ${{ secrets.ATLAS_URI }}
