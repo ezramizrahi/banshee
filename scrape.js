@@ -3,7 +3,7 @@ const fs = require('fs');
 const dayjs = require('dayjs');
 
 (async () => {
-    const browser = await puppeteer.launch({ headless: true });
+    const browser = await puppeteer.launch({ headless: false });
     const page = await browser.newPage();
     await page.setViewport({ width: 0, height: 0});
     await page.setJavaScriptEnabled(false);
@@ -43,6 +43,7 @@ const dayjs = require('dayjs');
     for (let index = 0; index < movieTitles.length; index++) {
         // Search themoviedb for each film
         await page.goto('https://www.themoviedb.org/', { waitUntil: 'load' });
+        await page.waitForSelector('#inner_search_v4', { timeout: 35000, visible: true });
         await page.type('#inner_search_v4', movieTitles[index], { delay: 100 });
         await Promise.all([
             page.waitForNavigation({ waitUntil: "load" }),
