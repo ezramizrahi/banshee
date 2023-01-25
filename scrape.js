@@ -3,7 +3,7 @@ const fs = require('fs');
 const dayjs = require('dayjs');
 
 (async () => {
-    const browser = await puppeteer.launch({ headless: false });
+    const browser = await puppeteer.launch({ headless: true });
     const page = await browser.newPage();
     await page.setViewport({ width: 0, height: 0});
     await page.setJavaScriptEnabled(false);
