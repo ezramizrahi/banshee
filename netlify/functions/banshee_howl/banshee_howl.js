@@ -17,13 +17,13 @@ const bot = new Telegraf(process.env.BOT_TOKEN);
 bot.start(ctx => {
   console.log("Received /start command")
   try {
-    return ctx.replyWithHtml("<li><span>Babylon A tale of outsized ambition and outrageous excess, tracing the rise and fall of multiple characters in an era of unbridled decadence and depravity during Hollywood&#39;s transition from silent films and to sound films in the late 1920s.</span></li>")
+    return ctx.replyWithHTML("<li><span>Babylon A tale of outsized ambition and outrageous excess, tracing the rise and fall of multiple characters in an era of unbridled decadence and depravity during Hollywood&#39;s transition from silent films and to sound films in the late 1920s.</span></li>")
   } catch (e) {
     console.error("error in start action:", e)
     return ctx.reply("Error occured")
   }
 });
-bot.hears('hi', (ctx) => ctx.reply("<li><span>Babylon A tale of outsized ambition and outrageous excess, tracing the rise and fall of multiple characters in an era of unbridled decadence and depravity during Hollywood&#39;s transition from silent films and to sound films in the late 1920s.</span></li>"));
+bot.hears('hi', (ctx) => ctx.replyWithHTML("<li><span>Babylon A tale of outsized ambition and outrageous excess, tracing the rise and fall of multiple characters in an era of unbridled decadence and depravity during Hollywood&#39;s transition from silent films and to sound films in the late 1920s.</span></li>"));
 bot.launch();
 
 // AWS event handler syntax (https://docs.aws.amazon.com/lambda/latest/dg/nodejs-handler.html)
