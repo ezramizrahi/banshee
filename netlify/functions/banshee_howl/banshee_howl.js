@@ -31,7 +31,7 @@ bot.hears('howl', function (ctx, next) {
 });
 bot.on('message', function (ctx, next) {
     ctx.telegram.sendMessage(ctx.message.chat.id,
-      "<b>this gets sent after user types in any message into the chat</b>",
+        "<ul><li><span>Babylon A tale of outsized ambition and outrageous excess tracing the rise and fall of multiple characters in an era of unbridled decadence and depravity during Hollywood</span></li></ul>",
       { parse_mode: 'HTML' }
     )
 });
