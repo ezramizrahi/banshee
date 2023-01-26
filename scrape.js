@@ -4,6 +4,8 @@ const fs = require('fs');
 const dayjs = require('dayjs');
 const axios = require('axios');
 const https = require('https');
+const json2html = require('node-json2html');
+const data = require('./data.json');
 
 (async () => {
     const browser = await puppeteer.launch({ headless: true });
@@ -69,11 +71,15 @@ const https = require('https');
         const movieDetails = searchResponse.data.results.find((r) => r.title.normalize('NFD').replace(/\p{Diacritic}/gu, "").trim() === movieTitles[index].trim());
         const movieSummary = movieDetails ? movieDetails.overview : 'n/a';
         summaries.push(movieSummary);
-        const movieID = movieDetails.id.toString();
-        const creditsQueryURL = `https://api.themoviedb.org/3/movie/${movieID}/credits?api_key=${process.env.API_KEY}&language=en-US`;
-        const creditsResponse = await axios.get(creditsQueryURL, config);
-        const movieCast = creditsResponse.data.cast.slice(0, 5).map(c => c.name);
-        cast.push(movieCast);
+        const movieID = movieDetails ? movieDetails.id.toString() : 'n/a';
+        if (movieID !== 'n/a') {
+            const creditsQueryURL = `https://api.themoviedb.org/3/movie/${movieID}/credits?api_key=${process.env.API_KEY}&language=en-US`;
+            const creditsResponse = await axios.get(creditsQueryURL, config);
+            const movieCast = creditsResponse.data.cast.slice(0, 5).map(c => c.name);
+            cast.push(movieCast);
+        } else {
+            cast.push(['n/a']);
+        }
     }
 
     const scrapedAt = dayjs().format('dddd, MMMM D, YYYY h:mm A');
