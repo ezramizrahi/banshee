@@ -25,13 +25,13 @@ bot.start(ctx => {
 });
 bot.hears('howl', function (ctx, next) {
     ctx.telegram.sendMessage(ctx.message.chat.id,
-        "<li>Babylon A tale of outsized ambition and outrageous excess tracing the rise and fall of multiple characters in an era of unbridled decadence and depravity during Hollywood</li>",
+        "<span>Babylon A tale of outsized ambition and outrageous excess tracing the rise and fall of multiple characters in an era of unbridled decadence and depravity during Hollywood</span>",
         { parse_mode: 'HTML' }
     )
 });
 bot.on('message', function (ctx, next) {
     ctx.telegram.sendMessage(ctx.message.chat.id,
-        "<li>Babylon A tale of outsized ambition and outrageous excess tracing the rise and fall of multiple characters in an era of unbridled decadence and depravity during Hollywood</li>",
+        "<span>Babylon A tale of outsized ambition and outrageous excess tracing the rise and fall of multiple characters in an era of unbridled decadence and depravity during Hollywood</span>",
       { parse_mode: 'HTML' }
     )
 });
