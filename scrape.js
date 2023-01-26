@@ -54,10 +54,16 @@ const axios = require('axios');
 
     let ratings = [];
     let summaries = [];
+    const config = {
+        header: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin" : "*"
+        },
+    };
     for (let index = 0; index < movieTitles.length; index++) {
         const uriEncodedComponentTitle = encodeURIComponent(movieTitles[index].trim());
         const queryURL = `https://api.themoviedb.org/3/search/movie?api_key=${process.env.API_KEY}&language=en-US&query=${uriEncodedComponentTitle}&page=1&include_adult=false`;
-        const res = await axios.get(queryURL);
+        const res = await axios.get(queryURL, config);
         const movieObj = res.data.results.find((r) => r.title.normalize('NFD').replace(/\p{Diacritic}/gu, "").trim() === movieTitles[index].trim());
         const tempRating = movieObj ? movieObj.popularity.toString() : 'unknown';
         const tempSummary = movieObj ? movieObj.overview : 'unknown';
