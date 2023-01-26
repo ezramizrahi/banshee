@@ -7,6 +7,7 @@ const https = require('https');
 
 (async () => {
     const browser = await puppeteer.launch({ headless: true });
+    console.log('user agent', browser.userAgent());
     const page = await browser.newPage();
     await page.setViewport({ width: 0, height: 0});
     await page.setJavaScriptEnabled(false);
