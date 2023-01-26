@@ -25,7 +25,8 @@ bot.start(ctx => {
 });
 bot.on('message', function (ctx, next) {
     ctx.telegram.sendMessage(ctx.message.chat.id,
-      "<b>bold</b>"
+      "<b>bold</b>",
+      { parse_mode: 'HTML' }
     )
 });
 
