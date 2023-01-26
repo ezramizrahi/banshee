@@ -17,7 +17,7 @@ const bot = new Telegraf(process.env.BOT_TOKEN);
 bot.start(ctx => {
   console.log("Received /start command")
   try {
-    return ctx.reply("<li><span>Babylon A tale of outsized ambition and outrageous excess, tracing the rise and fall of multiple characters in an era of unbridled decadence and depravity during Hollywood&#39;s transition from silent films and to sound films in the late 1920s.</span></li>")
+    return ctx.reply("bot is started")
   } catch (e) {
     console.error("error in start action:", e)
     return ctx.reply("Error occured")
@@ -25,7 +25,7 @@ bot.start(ctx => {
 });
 bot.hears('howl', function (ctx, next) {
     ctx.telegram.sendMessage(ctx.message.chat.id,
-        "<b>using the word howl will show a list of all movies today</b>",
+        "<li><span>Babylon A tale of outsized ambition and outrageous excess, tracing the rise and fall of multiple characters in an era of unbridled decadence and depravity during Hollywood&#39;s transition from silent films and to sound films in the late 1920s.</span></li>",
         { parse_mode: 'HTML' }
     )
 });
