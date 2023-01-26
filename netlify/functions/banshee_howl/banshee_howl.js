@@ -25,7 +25,7 @@ bot.start(ctx => {
 });
 bot.hears('howl', function (ctx, next) {
     ctx.telegram.sendMessage(ctx.message.chat.id,
-        "<li><span>Babylon A tale of outsized ambition and outrageous excess, tracing the rise and fall of multiple characters in an era of unbridled decadence and depravity during Hollywood&#39;s transition from silent films and to sound films in the late 1920s.</span></li>",
+        "<ul><li><span>Babylon A tale of outsized ambition and outrageous excess tracing the rise and fall of multiple characters in an era of unbridled decadence and depravity during Hollywood</span></li></ul>",
         { parse_mode: 'HTML' }
     )
 });
