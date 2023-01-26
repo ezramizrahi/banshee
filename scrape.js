@@ -60,9 +60,9 @@ const https = require('https');
           "Content-Type": "application/json",
           "Access-Control-Allow-Origin" : "*"
         },
-        httpsAgent: new https.Agent({
-            rejectUnauthorized: false
-        }),
+        // httpsAgent: new https.Agent({
+        //     rejectUnauthorized: false
+        // }),
     };
     for (let index = 0; index < movieTitles.length; index++) {
         const uriEncodedComponentTitle = encodeURIComponent(movieTitles[index].trim());
