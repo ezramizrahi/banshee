@@ -5,15 +5,15 @@ const FilmSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    rating: {
-        type: String,
-        required: true
-    },
     summary: {
         type: String,
         required: true
     },
     times: {
+        type: Array,
+        required: true
+    },
+    cast: {
         type: Array,
         required: true
     },

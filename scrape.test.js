@@ -7,13 +7,6 @@ test('movie is a string', () => {
     });
 });
 
-test('rating is a string', () => {
-    data.forEach(d => {
-        expect(d).toHaveProperty('rating');
-        expect(d.rating).toEqual(expect.any(String));
-    });
-});
-
 test('summary is a string', () => {
     data.forEach(d => {
         expect(d).toHaveProperty('summary');
@@ -26,6 +19,14 @@ test('times an array of strings', () => {
         expect(d).toHaveProperty('times');
         expect(d.times).toEqual(expect.any(Array));
         expect(d.times).toEqual(expect.arrayContaining([expect.any(String)]));
+    });
+});
+
+test('cast an array of strings', () => {
+    data.forEach(d => {
+        expect(d).toHaveProperty('cast');
+        expect(d.cast).toEqual(expect.any(Array));
+        expect(d.cast).toEqual(expect.arrayContaining([expect.any(String)]));
     });
 });
 
