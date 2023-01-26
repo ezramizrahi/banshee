@@ -25,13 +25,13 @@ bot.start(ctx => {
 });
 bot.hears('howl', function (ctx, next) {
     ctx.telegram.sendMessage(ctx.message.chat.id,
-        "<b>movie listing in bold</b>",
+        "<b>using the word howl will show a list of all movies today</b>",
         { parse_mode: 'HTML' }
     )
 });
 bot.on('message', function (ctx, next) {
     ctx.telegram.sendMessage(ctx.message.chat.id,
-      "<b>anytime i messagebold</b>",
+      "<b>this gets sent after user types in any message into the chat</b>",
       { parse_mode: 'HTML' }
     )
 });
