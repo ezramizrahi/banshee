@@ -23,11 +23,11 @@ bot.start(ctx => {
     return ctx.reply("Error occured")
   }
 });
-bot.on('message', function (ctx, next) {
-    ctx.telegram.sendMessage(ctx.message.chat.id,
-      "<b>bold</b>"
-    )
-});
+// bot.on('message', function (ctx, next) {
+//     ctx.telegram.sendMessage(ctx.message.chat.id,
+//       "<b>bold</b>"
+//     )
+// });
 
 // AWS event handler syntax (https://docs.aws.amazon.com/lambda/latest/dg/nodejs-handler.html)
 const handler = async event => {
