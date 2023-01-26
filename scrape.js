@@ -59,6 +59,9 @@ const axios = require('axios');
           "Content-Type": "application/json",
           "Access-Control-Allow-Origin" : "*"
         },
+        httpsAgent: new https.Agent({
+            rejectUnauthorized: false
+        }),
     };
     for (let index = 0; index < movieTitles.length; index++) {
         const uriEncodedComponentTitle = encodeURIComponent(movieTitles[index].trim());
