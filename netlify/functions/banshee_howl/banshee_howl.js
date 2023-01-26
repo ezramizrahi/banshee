@@ -23,9 +23,15 @@ bot.start(ctx => {
     return ctx.reply("Error occured")
   }
 });
+bot.hears('howl', function (ctx, next) {
+    ctx.telegram.sendMessage(ctx.message.chat.id,
+        "<b>movie listing in bold</b>",
+        { parse_mode: 'HTML' }
+    )
+});
 bot.on('message', function (ctx, next) {
     ctx.telegram.sendMessage(ctx.message.chat.id,
-      "<b>bold</b>",
+      "<b>anytime i messagebold</b>",
       { parse_mode: 'HTML' }
     )
 });
