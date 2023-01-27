@@ -27,6 +27,7 @@ const axios = require('axios');
     });
 
     // Get today's show times
+    // TODO: we can build the URL below from link attributes
     let nowShowingSessions = [];
     for (let index = 0; index < movieTitles.length; index++) {
         await page.goto('https://www.ritzcinemas.com.au/now-showing', { waitUntil: 'load' });
@@ -86,7 +87,7 @@ const axios = require('axios');
     let nowShowingBotText = output.map(m => {
         let nowShowingJoined;
         if (m.times && m.times !== null) {
-            nowShowingJoined = m.times.join(" ");
+            nowShowingJoined = m.times.join(", ");
         }
         return `<b>${m.movie.trim()}</b> showing at: <b>${nowShowingJoined}</b>. <b>Summary:</b> ${m.summary}`;
     });
