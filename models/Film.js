@@ -17,6 +17,10 @@ const FilmSchema = new mongoose.Schema({
         type: Array,
         required: true
     },
+    url: {
+        type: String,
+        required: true
+    },
     bot_text: {
         type: String,
         required: true

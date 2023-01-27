@@ -22,7 +22,7 @@ const axios = require('axios');
     await page.goto('https://www.ritzcinemas.com.au/now-showing', { waitUntil: 'load' });
 
     // Store movie titles from the Ritz now-showing page
-    let movieTitles = await page.evaluate(() => {
+    const movieTitles = await page.evaluate(() => {
         return Array.from(document.querySelectorAll('span.Title > a'), el => el.textContent)
     });
 
@@ -32,7 +32,8 @@ const axios = require('axios');
           a => a.getAttribute('href')
         )
     );
-    const movieLinks = [...new Set( allLinks.filter(link => link.includes('/movies/')) )];
+    const moviePaths = [...new Set( allLinks.filter(link => link.includes('/movies/')) )];
+    const movieLinks = moviePaths.map((p) => `https://www.ritzcinemas.com.au${p}`);
     console.log('links', movieLinks)
 
     // Get today's show times
@@ -89,16 +90,17 @@ const axios = require('axios');
         }
     }
 
+    // TODO: CLEAN UP BELOW
     const scrapedAt = dayjs().format('dddd, MMMM D, YYYY h:mmA');
     // Create an array of objects containing film title and rating
-    let output = movieTitles.map((movie,i) => ({ movie, summary: summaries[i], times: nowShowingSessions[i], cast: cast[i], scraped_at: scrapedAt }));
+    let output = movieTitles.map((movie,i) => ({ movie, summary: summaries[i], times: nowShowingSessions[i], cast: cast[i], url: movieLinks[i], scraped_at: scrapedAt }));
     console.log('output', output);
     let nowShowingBotText = output.map(m => {
         let nowShowingJoined;
         if (m.times && m.times !== null) {
             nowShowingJoined = m.times.join(", ");
         }
-        return `<b>${m.movie.trim()}</b> showing at: <b>${nowShowingJoined}</b>.\n<b>Summary:</b> ${m.summary}\n<b>Cast:</b> <i>${m.cast.join(", ")}</i>`;
+        return `<b>${m.movie.trim()}</b> showing at: <b>${nowShowingJoined}</b>.\n<b>Summary:</b> ${m.summary}\n<b>Cast:</b> <i>${m.cast.join(", ")}</i>\n<b>Tickets:</b> <a href=${m.url}>${m.url}</a>`;
     });
     let newoutput = output.map((movie, i) => ({ ...movie, bot_text: nowShowingBotText[i] }));
 
