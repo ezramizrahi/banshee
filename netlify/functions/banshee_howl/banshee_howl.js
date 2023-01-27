@@ -13,23 +13,27 @@ const bot = new Telegraf(process.env.BOT_TOKEN);
 //     {"<>": "span", "text": "${movie} ${summary}"}
 // ]});
 // console.log(html)
-try {
-    const res = await fetch(
-        `https://banshee.netlify.app/.netlify/functions/get_movies`
-    );
-    const data = await res.json();
-    console.log('data', data);
-    return data;
-} catch (err) {
-    console.log(err);
-}
-// testing if i can get data
-let mymsg;
-if (data) {
-    mymsg = 'ive got data'
-} else {
-    mymsg = 'no data'
-}
+async function getMyData() {
+    try {
+        const res = await fetch(
+            `https://banshee.netlify.app/.netlify/functions/get_movies`
+        );
+        const data = await res.json();
+        console.log('data', data);
+        return data;
+    } catch (err) {
+        console.log(err);
+    }
+
+    // testing if i can get data
+    let mymsg;
+    if (data) {
+        return mymsg = 'ive got data'
+    } else {
+        return mymsg = 'no data'
+    }
+};
+getMyData();
 
 bot.start(ctx => {
   console.log("Received /start command")
