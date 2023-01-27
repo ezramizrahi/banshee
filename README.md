@@ -13,13 +13,13 @@
 
 ## About
 
-Scraping the 'now playing' section of my local movie theatre's website. It doesn't contain any rating information or a detailed summary, so I use Puppeteer to grab the 'now playing' film titles and show times, and then grab further information for each film from TMDB API, e.g. cast and summary. Currently this is run twice a day via a Cron setting in the `scheduled-jobs.yml` workflow file.
+Scraping the 'now playing' section of my local movie theatre's website. It doesn't contain any details on cast or a detailed summary, so I use Puppeteer to grab the 'now playing' film titles and show times, and then grab further information for each film from TMDB API, e.g. cast and summary. Currently this is run twice a day via a Cron setting in the `scheduled-jobs.yml` workflow file.
 
 This data is then stored in a MongoDB Atlas collection, and exposed via a Netlify Function. The Netlify Function is tested using Postman.
 
 Finally, a Telegram bot (banshee_howl_bot) makes a call to the Netlify Function to get and display the data whenever a user sends `howl` to the bot.
 
-<img src="banshee_example.jpg" alt="screenshot of telegram bot interaction"/>
+<img src="banshee.jpg" alt="screenshot of telegram bot interaction"/>
 
 ### Built With/Uses:
 
