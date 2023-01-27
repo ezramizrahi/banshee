@@ -44,16 +44,12 @@ bot.start(ctx => {
   }
 });
 bot.hears('howl', async function (ctx, next) {
-    try {
-        const res = await axios.get(
-            `https://banshee.netlify.app/.netlify/functions/get_movies`
-        );
-        console.log('data', res);
-    } catch (err) {
-        console.log(err);
-    }
+    const res = await axios.get(
+        `https://banshee.netlify.app/.netlify/functions/get_movies`
+    );
+    console.log('data', res.data);
     let mymsg;
-    if (res) {
+    if (res.data) {
         mymsg = 'i have data'
     } else {
         mymsg = 'no data'
