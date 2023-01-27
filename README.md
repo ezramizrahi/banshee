@@ -44,7 +44,7 @@ To get a local copy up and running follow these steps:
 - [x] Build scraper
 - [x] Use TMDB API instead of scraping TMDB
 - [x] Setup GitHub Workflow
-- [x] Create Netlify Function
+- [x] Create Netlify Function to get movies from MongoDB
 - [x] Add Postman tests (may remove these in the future)
 - [x] Create Telegram Bot with Netlify Function
 - [ ] Clean up code
