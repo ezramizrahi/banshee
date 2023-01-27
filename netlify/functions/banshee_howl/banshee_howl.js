@@ -24,7 +24,7 @@ bot.hears('howl', async function (ctx, next) {
         movieTimes = 'No data yet';
     }
     await ctx.telegram.sendMessage(ctx.message.chat.id,
-        `Hi ${ctx.message.chat.first_name}! Here are the movies showing today: \n\n ${movieTimes}`,
+        `Hi ${ctx.message.chat.first_name}! Here are the movies showing today: \n\n${movieTimes}`,
         { parse_mode: 'HTML' }
     )
 });
