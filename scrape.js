@@ -91,7 +91,7 @@ const data = require('./data.json');
         if (m.times && m.times !== null) {
             nowShowingJoined = m.times.join(" ");
         }
-        return `<b>${m.movie.trim()}</b> showing at: <b>${nowShowingJoined}</b>. Summary: ${m.summary}`;
+        return `<b>${m.movie.trim()}</b> showing at: <b>${nowShowingJoined}</b>. <b>Summary:</b> ${m.summary}`;
     });
     let newoutput = output.map((movie, i) => ({ ...movie, bot_text: nowShowingBotText[i] }));
 
