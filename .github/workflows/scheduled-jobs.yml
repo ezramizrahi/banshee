@@ -36,11 +36,11 @@ jobs:
           ATLAS_URI: ${{ secrets.ATLAS_URI }}
           MONGODB_DATABASE: ${{ secrets.MONGODB_DATABASE }}
           MONGODB_COLLECTION: ${{ secrets.MONGODB_COLLECTION }}
-      - name: REST API with curl
-        run: |
-          curl -X GET "$WebHook_URL"
-        env:
-          WebHook_URL: ${{ secrets.WEBHOOK_URL }}
+      # - name: REST API with curl
+      #   run: |
+      #     curl -X GET "$WebHook_URL"
+      #   env:
+      #     WebHook_URL: ${{ secrets.WEBHOOK_URL }}
   # automated-api-tests:
   #   needs: scrape_films_and_seed_mongodb
   #   runs-on: ubuntu-latest
