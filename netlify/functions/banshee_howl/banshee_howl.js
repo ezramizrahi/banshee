@@ -14,6 +14,7 @@ const bot = new Telegraf(process.env.BOT_TOKEN);
 //     {"<>": "span", "text": "${movie} ${summary}"}
 // ]});
 // console.log(html)
+let mymsg;
 async function getMyData() {
     try {
         const res = await axios.get(
@@ -26,11 +27,10 @@ async function getMyData() {
     }
 
     // testing if i can get data
-    let mymsg;
     if (res) {
-        return mymsg = 'ive got data'
+        return mymsg = 'ive got data';
     } else {
-        return mymsg = 'no data'
+        return mymsg = 'no data';
     }
 };
 getMyData();
