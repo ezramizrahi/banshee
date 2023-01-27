@@ -25,7 +25,7 @@ bot.hears('howl', async function (ctx, next) {
     );
     let movieTimes
     if (res.data.length > 1) {
-        movieTimes = res.data.filter((d) => d.bot_text).join('\n');
+        movieTimes = res.data.map((d) => d.bot_text).join('\n');
     } else {
         movieTimes = 'No data yet';
     }
