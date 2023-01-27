@@ -35,7 +35,7 @@ To get a local copy up and running follow these steps:
 
 1. clone the repo (you will need a `.env` file with your own MongoDB and Telegram Bot secrets)
 2. run `npm install`
-3. run `npm run scrape` to scrape the movie data and save it to a `data.json`
+3. run `npm run scrape` to scrape the movie data and save it to `data.json`
 4. run `npm run test` to test that `data.json` has the expected keys and that the values are of the expected types
 5. run `npm run seed` to clean and reseed the db with the latest films
 
