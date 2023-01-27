@@ -91,9 +91,12 @@ const data = require('./data.json');
         if (m.times && m.times !== null) {
             nowShowingJoined = m.times.join(" ");
         }
-        return `${m.movie.trim()} showing at: ${nowShowingJoined}`;
+        return `<b>${m.movie.trim()}</b> showing at: <b>${nowShowingJoined}</b>`;
     });
     console.log(nowShowingBotText.join('\n'));
+    let newoutput = output.map((movie, i) => ({ ...movie, bot_text: nowShowingBotText[i] }));
+    console.log('newoutput', newoutput)
+
 
     // Write json file
     const outputToJSON = JSON.stringify(output);
