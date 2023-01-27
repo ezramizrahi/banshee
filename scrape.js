@@ -98,7 +98,7 @@ const axios = require('axios');
         if (m.times && m.times !== null) {
             nowShowingJoined = m.times.join(", ");
         }
-        return `<b>${m.movie.trim()}</b> showing at: <b>${nowShowingJoined}</b>.\n<b>Summary:</b> ${m.summary}.\n<b>Cast:</b> <i>${m.cast.join(", ")}</i>`;
+        return `<b>${m.movie.trim()}</b> showing at: <b>${nowShowingJoined}</b>.\n<b>Summary:</b> ${m.summary}\n<b>Cast:</b> <i>${m.cast.join(", ")}</i>`;
     });
     let newoutput = output.map((movie, i) => ({ ...movie, bot_text: nowShowingBotText[i] }));
 
