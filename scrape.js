@@ -26,6 +26,15 @@ const axios = require('axios');
         return Array.from(document.querySelectorAll('span.Title > a'), el => el.textContent)
     });
 
+    const allLinks = await page.evaluate(
+        () => Array.from(
+          document.querySelectorAll('a[href]'),
+          a => a.getAttribute('href')
+        )
+    );
+    const movieLinks = [...new Set( allLinks.filter(link => link.includes('/movies/')) )];
+    console.log('links', movieLinks)
+
     // Get today's show times
     // TODO: we can build the URL below from link attributes
     let nowShowingSessions = [];
@@ -89,7 +98,7 @@ const axios = require('axios');
         if (m.times && m.times !== null) {
             nowShowingJoined = m.times.join(", ");
         }
-        return `<b>${m.movie.trim()}</b> showing at: <b>${nowShowingJoined}</b>. <b>Summary:</b> ${m.summary}`;
+        return `<b>${m.movie.trim()}</b> showing at: <b>${nowShowingJoined}</b>.\n<b>Summary:</b> ${m.summary}.\n <b>Cast:</b> <i>${m.cast.join(", ")}</i>`;
     });
     let newoutput = output.map((movie, i) => ({ ...movie, bot_text: nowShowingBotText[i] }));
 
