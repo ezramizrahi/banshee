@@ -34,7 +34,6 @@ const axios = require('axios');
     );
     const moviePaths = [...new Set( allLinks.filter(link => link.includes('/movies/')) )];
     const movieLinks = moviePaths.map((p) => `https://www.ritzcinemas.com.au${p}`);
-    console.log('links', movieLinks)
 
     // Get today's show times
     // TODO: we can build the URL below from link attributes
@@ -100,7 +99,7 @@ const axios = require('axios');
         if (m.times && m.times !== null) {
             nowShowingJoined = m.times.join(", ");
         }
-        return `<b>${m.movie.trim()}</b> showing at: <b>${nowShowingJoined}</b>.\n<b>Summary:</b> ${m.summary}\n<b>Cast:</b> <i>${m.cast.join(", ")}</i>\n<b>Tickets:</b> <a href=${m.url}>${m.url}</a>`;
+        return `<b>${m.movie.trim()}</b> showing at: <b>${nowShowingJoined}</b>.\n<b>Summary:</b> ${m.summary}\n<b>Cast:</b> <i>${m.cast.join(", ")}</i>\n<b>Tickets:</b> <a href = ${m.url}> ${m.url} </a>`;
     });
     let newoutput = output.map((movie, i) => ({ ...movie, bot_text: nowShowingBotText[i] }));
 
