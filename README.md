@@ -41,7 +41,7 @@ To get a local copy up and running follow these steps:
 
 ## TO DO
 
-- [x] Build scraper for local cinema
+- [x] Build scraper
 - [x] Use TMDB API instead of scraping TMDB
 - [x] Setup GitHub Workflow
 - [x] Create Netlify Function
