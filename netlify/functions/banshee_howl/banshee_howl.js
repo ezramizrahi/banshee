@@ -13,6 +13,23 @@ const bot = new Telegraf(process.env.BOT_TOKEN);
 //     {"<>": "span", "text": "${movie} ${summary}"}
 // ]});
 // console.log(html)
+try {
+    const res = await fetch(
+        `https://banshee.netlify.app/.netlify/functions/get_movies`
+    );
+    const data = await res.json();
+    console.log('data', data);
+    return data;
+} catch (err) {
+    console.log(err);
+}
+// testing if i can get data
+let mymsg;
+if (data) {
+    mymsg = 'ive got data'
+} else {
+    mymsg = 'no data'
+}
 
 bot.start(ctx => {
   console.log("Received /start command")
@@ -25,7 +42,7 @@ bot.start(ctx => {
 });
 bot.hears('howl', function (ctx, next) {
     ctx.telegram.sendMessage(ctx.message.chat.id,
-        "<b>Babylon A tale of outsized ambition and outrageous excess tracing the rise and fall of multiple characters in an era of unbridled decadence and depravity during Hollywood</b>",
+        mymsg,
         { parse_mode: 'HTML' }
     )
 });

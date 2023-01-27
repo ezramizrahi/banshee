@@ -9,7 +9,7 @@ const data = require('./data.json');
 
 (async () => {
     const browser = await puppeteer.launch({ headless: true });
-    console.log('user agent', browser.userAgent());
+    // console.log('user agent', browser.userAgent());
     const page = await browser.newPage();
     await page.setViewport({ width: 0, height: 0});
     await page.setJavaScriptEnabled(false);
@@ -82,10 +82,18 @@ const data = require('./data.json');
         }
     }
 
-    const scrapedAt = dayjs().format('dddd, MMMM D, YYYY h:mm A');
+    const scrapedAt = dayjs().format('dddd, MMMM D, YYYY h:mmA');
     // Create an array of objects containing film title and rating
     let output = movieTitles.map((movie,i) => ({ movie, summary: summaries[i], times: nowShowingSessions[i], cast: cast[i], scraped_at: scrapedAt }));
-    console.log('output', output);
+    // console.log('output', output);
+    let nowShowingBotText = output.map(m => {
+        let nowShowingJoined;
+        if (m.times && m.times !== null) {
+            nowShowingJoined = m.times.join(" ");
+        }
+        return `${m.movie.trim()} showing at: ${nowShowingJoined}`;
+    });
+    console.log(nowShowingBotText.join('\n'));
 
     // Write json file
     const outputToJSON = JSON.stringify(output);
