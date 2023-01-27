@@ -1,14 +1,8 @@
 
 const { Telegraf } = require("telegraf");
 const axios = require('axios');
-const json2html = require('node-json2html');
 
 const bot = new Telegraf(process.env.BOT_TOKEN);
-
-// let html = json2html.transform(data,{"<>": "li", "html":[
-//     {"<>": "span", "text": "${movie} ${summary}"}
-// ]});
-
 bot.start(ctx => {
   console.log("Received /start command")
   try {
