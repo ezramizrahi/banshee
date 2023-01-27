@@ -32,15 +32,16 @@ const axios = require('axios');
     //       a => a.getAttribute('href')
     //     )
     // );
-    const allLinks = await page.evaluate(() => {
-        return Array.from(document.querySelectorAll('a[href]'), a => a.getAttribute('href'))
-    });
-    const moviePaths = [...new Set( allLinks.filter(link => link.includes('/movies/')) )];
-    const movieLinks = moviePaths.map((path) => `https://www.ritzcinemas.com.au${path}`);
+    // const allLinks = await page.evaluate(() => {
+    //     return Array.from(document.querySelectorAll('a[href]'), a => a.getAttribute('href'))
+    // });
+    // const moviePaths = [...new Set( allLinks.filter(link => link.includes('/movies/')) )];
+    // const movieLinks = moviePaths.map((path) => `https://www.ritzcinemas.com.au${path}`);
 
     // Get today's show times
     // TODO: we can build the URL below from link attributes
     let nowShowingSessions = [];
+    let movieLinks = [];
     for (let index = 0; index < movieTitles.length; index++) {
         await page.goto('https://www.ritzcinemas.com.au/now-showing', { waitUntil: 'load' });
         let titles = await page.$$('span.Title > a');
@@ -61,6 +62,7 @@ const axios = require('axios');
         } else {
             nowShowingSessions.unshift(['no sessions left today'])
         }
+        movieLinks.push(await page.url());
     }
 
     // close browser
