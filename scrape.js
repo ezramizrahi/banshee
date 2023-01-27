@@ -93,13 +93,12 @@ const data = require('./data.json');
         }
         return `<b>${m.movie.trim()}</b> showing at: <b>${nowShowingJoined}</b>`;
     });
-    console.log(nowShowingBotText.join('\n'));
+    // console.log(nowShowingBotText.join('\n'));
     let newoutput = output.map((movie, i) => ({ ...movie, bot_text: nowShowingBotText[i] }));
-    console.log('newoutput', newoutput)
 
 
     // Write json file
-    const outputToJSON = JSON.stringify(output);
+    const outputToJSON = JSON.stringify(newoutput);
     fs.writeFile('./data.json', outputToJSON, (err) => {
         if (!err) {
             console.log('done');
