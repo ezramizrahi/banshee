@@ -85,15 +85,14 @@ const data = require('./data.json');
     const scrapedAt = dayjs().format('dddd, MMMM D, YYYY h:mmA');
     // Create an array of objects containing film title and rating
     let output = movieTitles.map((movie,i) => ({ movie, summary: summaries[i], times: nowShowingSessions[i], cast: cast[i], scraped_at: scrapedAt }));
-    // console.log('output', output);
+    console.log('output', output);
     let nowShowingBotText = output.map(m => {
         let nowShowingJoined;
         if (m.times && m.times !== null) {
             nowShowingJoined = m.times.join(" ");
         }
-        return `<b>${m.movie.trim()}</b> showing at: <b>${nowShowingJoined}</b>`;
+        return `<b>${m.movie.trim()}</b> showing at: <b>${nowShowingJoined}</b>. Summary: ${m.summary}`;
     });
-    // console.log(nowShowingBotText.join('\n'));
     let newoutput = output.map((movie, i) => ({ ...movie, bot_text: nowShowingBotText[i] }));
 
 

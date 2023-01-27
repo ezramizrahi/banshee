@@ -12,7 +12,7 @@ const bot = new Telegraf(process.env.BOT_TOKEN);
 bot.start(ctx => {
   console.log("Received /start command")
   try {
-    return ctx.reply("bot is started")
+    return ctx.reply("Bot started. Type howl to get a list of the movies showing today.")
   } catch (e) {
     console.error("error in start action:", e)
     return ctx.reply("Error occured")
@@ -23,22 +23,15 @@ bot.hears('howl', async function (ctx, next) {
     const res = await axios.get(
         `https://banshee.netlify.app/.netlify/functions/get_movies`
     );
-    let movieTimes
+    let movieTimes;
     if (res.data.length > 1) {
-        movieTimes = res.data.map((d) => d.bot_text).join('\n');
+        movieTimes = res.data.map((d) => d.bot_text).join('\n\n');
     } else {
         movieTimes = 'No data yet';
     }
     await ctx.telegram.sendMessage(ctx.message.chat.id,
-        `hi ${ctx.message.chat.first_name}! ${movieTimes}`,
+        `Hi ${ctx.message.chat.first_name}! Here ${movieTimes}`,
         { parse_mode: 'HTML' }
-    )
-});
-
-bot.on('message', async function (ctx, next) {
-    await ctx.telegram.sendMessage(ctx.message.chat.id,
-        "<b>Babylon A tale of outsized ambition and outrageous excess tracing the rise and fall of multiple characters in an era of unbridled decadence and depravity during Hollywood</b>",
-      { parse_mode: 'HTML' }
     )
 });
 
