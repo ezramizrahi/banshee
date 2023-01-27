@@ -1,6 +1,7 @@
 
 const { Telegraf } = require("telegraf");
 const { MongoClient } = require("mongodb");
+const axios = require('axios');
 
 const mongoClient = new MongoClient(process.env.ATLAS_URI);
 const clientPromise = mongoClient.connect();
@@ -15,19 +16,18 @@ const bot = new Telegraf(process.env.BOT_TOKEN);
 // console.log(html)
 async function getMyData() {
     try {
-        const res = await fetch(
+        const res = await axios.get(
             `https://banshee.netlify.app/.netlify/functions/get_movies`
         );
-        const data = await res.json();
-        console.log('data', data);
-        return data;
+        console.log('data', res);
+        return res;
     } catch (err) {
         console.log(err);
     }
 
     // testing if i can get data
     let mymsg;
-    if (data) {
+    if (res) {
         return mymsg = 'ive got data'
     } else {
         return mymsg = 'no data'
