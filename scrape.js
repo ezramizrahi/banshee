@@ -3,9 +3,6 @@ const puppeteer = require('puppeteer');
 const fs = require('fs');
 const dayjs = require('dayjs');
 const axios = require('axios');
-const https = require('https');
-const json2html = require('node-json2html');
-const data = require('./data.json');
 
 (async () => {
     const browser = await puppeteer.launch({ headless: true });
