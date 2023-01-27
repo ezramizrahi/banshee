@@ -21,7 +21,6 @@ async function getMyData() {
             `https://banshee.netlify.app/.netlify/functions/get_movies`
         );
         console.log('data', res);
-        return res;
     } catch (err) {
         console.log(err);
     }
@@ -46,7 +45,7 @@ bot.start(ctx => {
 });
 bot.hears('howl', function (ctx, next) {
     ctx.telegram.sendMessage(ctx.message.chat.id,
-        mymsg,
+        `hi ${ctx.message.chat.first_name}! ${mymsg}`,
         { parse_mode: 'HTML' }
     )
 });
