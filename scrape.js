@@ -26,12 +26,15 @@ const axios = require('axios');
         return Array.from(document.querySelectorAll('span.Title > a'), el => el.textContent)
     });
 
-    const allLinks = await page.evaluate(
-        () => Array.from(
-          document.querySelectorAll('a[href]'),
-          a => a.getAttribute('href')
-        )
-    );
+    // const allLinks = await page.evaluate(
+    //     () => Array.from(
+    //       document.querySelectorAll('a[href]'),
+    //       a => a.getAttribute('href')
+    //     )
+    // );
+    const allLinks = await page.evaluate(() => {
+        return Array.from(document.querySelectorAll('a[href]'), a => a.getAttribute('href'))
+    });
     const moviePaths = [...new Set( allLinks.filter(link => link.includes('/movies/')) )];
     const movieLinks = moviePaths.map((p) => `https://www.ritzcinemas.com.au${p}`);
 
