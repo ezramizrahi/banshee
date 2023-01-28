@@ -24,12 +24,8 @@ bot.hears('howl', async function (ctx, next) {
         movieTimes = 'No data yet';
     }
     await ctx.telegram.sendMessage(ctx.message.chat.id,
-      `Hi ${ctx.message.chat.first_name}. Here are today's movies playing at The Ritz.\nhttps://www.ritzcinemas.com.au.\n\n`,
+      `Hi ${ctx.message.chat.first_name}. Here are today's movies playing at The Ritz.\nhttps://www.ritzcinemas.com.au. \n\n${movieTimes}\n\n<i>Enjoy.</i>`,
       { parse_mode: 'HTML' }
-    );
-    await ctx.telegram.sendMessage(ctx.message.chat.id,
-        `${movieTimes}`,
-        { parse_mode: 'HTML' }
     );
 });
 
