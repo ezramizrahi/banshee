@@ -6,7 +6,7 @@ const bot = new Telegraf(process.env.BOT_TOKEN);
 bot.start(ctx => {
   console.log("Received /start command")
   try {
-    return ctx.reply("Bot started. Type howl to get a list of the movies showing today.")
+    return ctx.reply("Bot started. Type howl (all lowercase) to get a list of the movies showing today.")
   } catch (e) {
     console.error("error in start action:", e)
     return ctx.reply("Error occured")
@@ -24,9 +24,13 @@ bot.hears('howl', async function (ctx, next) {
         movieTimes = 'No data yet';
     }
     await ctx.telegram.sendMessage(ctx.message.chat.id,
-        `Hi ${ctx.message.chat.first_name}. Here are today's movies playing at The Ritz https://www.ritzcinemas.com.au. Enjoy.\n\n${movieTimes}`,
+      `Hi ${ctx.message.chat.first_name}. Here are today's movies playing at The Ritz.\nhttps://www.ritzcinemas.com.au.\n\n`,
+      { parse_mode: 'HTML' }
+    );
+    await ctx.telegram.sendMessage(ctx.message.chat.id,
+        `${movieTimes}`,
         { parse_mode: 'HTML' }
-    )
+    );
 });
 
 // AWS event handler syntax (https://docs.aws.amazon.com/lambda/latest/dg/nodejs-handler.html)
