@@ -16,7 +16,7 @@ describe('schema validation', () => {
         });
     });
     
-    test('times an array of strings', () => {
+    test('times is an array of strings', () => {
         data.forEach(d => {
             expect(d).toHaveProperty('times');
             expect(d.times).toEqual(expect.any(Array));
@@ -24,7 +24,7 @@ describe('schema validation', () => {
         });
     });
     
-    test('cast an array of strings', () => {
+    test('cast is an array of strings', () => {
         data.forEach(d => {
             expect(d).toHaveProperty('cast');
             expect(d.cast).toEqual(expect.any(Array));
