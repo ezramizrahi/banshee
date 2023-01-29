@@ -24,7 +24,7 @@ const puppeteerLib = require('./lib/puppeteerLib');
         await page.goto(nowShowingURL, { waitUntil: 'load' });
         const titles = await page.$$('span.Title > a');
         await Promise.all([
-            page.waitForNavigation({ waitUntil: "load" }),
+            page.waitForNavigation({ waitUntil: 'load' }),
             titles[index].click(),
         ]);
 
@@ -32,11 +32,11 @@ const puppeteerLib = require('./lib/puppeteerLib');
         if (await page.$('.Sessions')) {
             const sessionsParent = await page.$('.Sessions');
             const sessionsChildren = await sessionsParent.$$(':scope > *');
-            const sessionsLength = sessionsChildren.length;
+            // const sessionsLength = sessionsChildren.length;
             const allSessions = await page.evaluate(() => {
                 return Array.from(document.querySelectorAll('span.Time'), el => el.textContent)
             });
-            nowShowingSessions.push(allSessions.slice(0, sessionsLength));
+            nowShowingSessions.push(allSessions.slice(0, sessionsChildren.length));
         } else {
             nowShowingSessions.unshift(['no sessions left today']);
         }
@@ -73,10 +73,9 @@ const puppeteerLib = require('./lib/puppeteerLib');
     }
 
     // TODO: CLEAN UP BELOW
-    const scrapedAt = dayjs().format('dddd, MMMM D, YYYY h:mmA');
+    const scrapedAt = dayjs().format('dddd, MMMM D, YYYY h:mm A');
     // Create an array of objects containing film title and rating
     const output = movieTitles.map((movie,i) => ({ movie, summary: summaries[i], times: nowShowingSessions[i], cast: cast[i], url: movieLinks[i], scraped_at: scrapedAt }));
-    console.log('output', output);
     const nowShowingBotText = output.map(m => {
         let nowShowingJoined;
         if (m.times && m.times !== null) {
