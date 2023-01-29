@@ -3,25 +3,13 @@ const puppeteer = require('puppeteer');
 const fs = require('fs').promises;
 const dayjs = require('dayjs');
 const axios = require('axios');
-const lib = require('./lib/lib.js');
+const utils = require('./lib/utils.js');
+const puppeteerLib = require('./lib/puppeteerLib');
 
 (async () => {
-    const { API_KEY, RITZ_URL, TMDB_URL } = process.env;
-    const browser = await puppeteer.launch({ headless: true });
-    const page = await browser.newPage();
-    await page.setViewport({ width: 0, height: 0});
-    await page.setJavaScriptEnabled(false);
-    await page.setRequestInterception(true);
-    page.on('request', (req) => {
-        if(req.resourceType() === 'image'){
-            req.abort();
-        }
-        else {
-            req.continue();
-        }
-    });
-
-    const nowShowingURL = await lib.buildURL(RITZ_URL, '/now-showing');
+    const { RITZ_URL, TMDB_URL, API_KEY } = process.env;
+    const { browser, page } = await puppeteerLib.launchWithConfig();
+    const nowShowingURL = await utils.buildURL(RITZ_URL, '/now-showing');
     await page.goto(nowShowingURL, { waitUntil: 'load' });
 
     // Store movie titles from the Ritz now-showing page
@@ -30,12 +18,11 @@ const lib = require('./lib/lib.js');
     });
 
     // Get today's show times
-    // TODO: we can build the URL below from link attributes
     let nowShowingSessions = [];
     let movieLinks = [];
     for (let index = 0; index < movieTitles.length; index++) {
         await page.goto(nowShowingURL, { waitUntil: 'load' });
-        let titles = await page.$$('span.Title > a');
+        const titles = await page.$$('span.Title > a');
         await Promise.all([
             page.waitForNavigation({ waitUntil: "load" }),
             titles[index].click(),
@@ -43,15 +30,15 @@ const lib = require('./lib/lib.js');
 
         // Check for session count today
         if (await page.$('.Sessions')) {
-            let sessionsParent = await page.$('.Sessions');
-            let sessionsChildren = await sessionsParent.$$(':scope > *');
-            let sessionsLength = sessionsChildren.length;
-            let allSessions = await page.evaluate(() => {
+            const sessionsParent = await page.$('.Sessions');
+            const sessionsChildren = await sessionsParent.$$(':scope > *');
+            const sessionsLength = sessionsChildren.length;
+            const allSessions = await page.evaluate(() => {
                 return Array.from(document.querySelectorAll('span.Time'), el => el.textContent)
             });
             nowShowingSessions.push(allSessions.slice(0, sessionsLength));
         } else {
-            nowShowingSessions.unshift(['no sessions left today'])
+            nowShowingSessions.unshift(['no sessions left today']);
         }
         movieLinks.push(await page.url());
     }
@@ -88,16 +75,16 @@ const lib = require('./lib/lib.js');
     // TODO: CLEAN UP BELOW
     const scrapedAt = dayjs().format('dddd, MMMM D, YYYY h:mmA');
     // Create an array of objects containing film title and rating
-    let output = movieTitles.map((movie,i) => ({ movie, summary: summaries[i], times: nowShowingSessions[i], cast: cast[i], url: movieLinks[i], scraped_at: scrapedAt }));
+    const output = movieTitles.map((movie,i) => ({ movie, summary: summaries[i], times: nowShowingSessions[i], cast: cast[i], url: movieLinks[i], scraped_at: scrapedAt }));
     console.log('output', output);
-    let nowShowingBotText = output.map(m => {
+    const nowShowingBotText = output.map(m => {
         let nowShowingJoined;
         if (m.times && m.times !== null) {
             nowShowingJoined = m.times.join(", ");
         }
         return `<b>${m.movie.trim()}</b> showing at: <b>${nowShowingJoined}</b>.\n<b>Cast:</b> <i>${m.cast.join(", ")}</i>\n<b>Buy Tickets:</b> ${m.url}`;
     });
-    let newoutput = output.map((movie, i) => ({ ...movie, bot_text: nowShowingBotText[i] }));
+    const newoutput = output.map((movie, i) => ({ ...movie, bot_text: nowShowingBotText[i] }));
 
 
     // Write json file
