@@ -1,13 +1,13 @@
 require('dotenv').config();
 const puppeteer = require('puppeteer');
-const fs = require('fs');
+const fs = require('fs').promises;
 const dayjs = require('dayjs');
 const axios = require('axios');
+const lib = require('./lib/lib.js');
 
 (async () => {
     const { API_KEY, RITZ_URL, TMDB_URL } = process.env;
     const browser = await puppeteer.launch({ headless: true });
-    // console.log('user agent', browser.userAgent());
     const page = await browser.newPage();
     await page.setViewport({ width: 0, height: 0});
     await page.setJavaScriptEnabled(false);
@@ -20,7 +20,9 @@ const axios = require('axios');
             req.continue();
         }
     });
-    await page.goto(`${RITZ_URL}/now-showing`, { waitUntil: 'load' });
+
+    const nowShowingURL = await lib.buildURL(RITZ_URL, '/now-showing');
+    await page.goto(nowShowingURL, { waitUntil: 'load' });
 
     // Store movie titles from the Ritz now-showing page
     const movieTitles = await page.evaluate(() => {
@@ -32,7 +34,7 @@ const axios = require('axios');
     let nowShowingSessions = [];
     let movieLinks = [];
     for (let index = 0; index < movieTitles.length; index++) {
-        await page.goto(`${RITZ_URL}/now-showing`, { waitUntil: 'load' });
+        await page.goto(nowShowingURL, { waitUntil: 'load' });
         let titles = await page.$$('span.Title > a');
         await Promise.all([
             page.waitForNavigation({ waitUntil: "load" }),
@@ -100,7 +102,7 @@ const axios = require('axios');
 
     // Write json file
     const outputToJSON = JSON.stringify(newoutput);
-    fs.writeFile('./data.json', outputToJSON, (err) => {
+    await fs.writeFile('./data.json', outputToJSON, (err) => {
         if (!err) {
             console.log('done');
         }
