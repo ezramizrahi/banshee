@@ -31,15 +31,7 @@ const puppeteerLib = require('./lib/puppeteerLib');
             const sessionsToday = await page.evaluate(() => {
                 return Array.from(document.querySelectorAll('.Sessions:not(.Hidden) > li > a > span.Time'), el => el.textContent)
             });
-            // console.log('mine', mine)
-            // console.log('mine len', mine.length)
-            // const sessionsParent = await page.$('.Sessions');
-            // const sessionsChildren = await sessionsParent.$$(':scope > *');
-            // const allSessions = await page.evaluate(() => {
-            //     return Array.from(document.querySelectorAll('span.Time'), el => el.textContent)
-            // });
-            // nowShowingSessions.push(allSessions.slice(0, sessionsChildren.length));
-            nowShowingSessions.push(sessionsToday)
+            nowShowingSessions.push(sessionsToday);
         } else {
             nowShowingSessions.unshift(['no sessions left']);
         }
