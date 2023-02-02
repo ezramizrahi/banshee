@@ -27,20 +27,24 @@ const puppeteerLib = require('./lib/puppeteerLib');
             page.waitForNavigation({ waitUntil: 'load' }),
             titles[index].click(),
         ]);
-
-        // Check for session count today
         if (await page.$('.Sessions')) {
-            const sessionsParent = await page.$('.Sessions');
-            const sessionsChildren = await sessionsParent.$$(':scope > *');
-            // const sessionsLength = sessionsChildren.length;
-            const allSessions = await page.evaluate(() => {
-                return Array.from(document.querySelectorAll('span.Time'), el => el.textContent)
+            const sessionsToday = await page.evaluate(() => {
+                return Array.from(document.querySelectorAll('.Sessions:not(.Hidden) > li > a > span.Time'), el => el.textContent)
             });
-            nowShowingSessions.push(allSessions.slice(0, sessionsChildren.length));
+            // console.log('mine', mine)
+            // console.log('mine len', mine.length)
+            // const sessionsParent = await page.$('.Sessions');
+            // const sessionsChildren = await sessionsParent.$$(':scope > *');
+            // const allSessions = await page.evaluate(() => {
+            //     return Array.from(document.querySelectorAll('span.Time'), el => el.textContent)
+            // });
+            // nowShowingSessions.push(allSessions.slice(0, sessionsChildren.length));
+            nowShowingSessions.push(sessionsToday)
         } else {
-            nowShowingSessions.unshift(['no sessions left today']);
+            nowShowingSessions.unshift(['no sessions left']);
         }
-        movieLinks.push(await page.url());
+        let currURL = page.url();
+        movieLinks.push(currURL);
     }
 
     // close browser
@@ -84,7 +88,7 @@ const puppeteerLib = require('./lib/puppeteerLib');
         return `<b>${m.movie.trim()}</b> showing at: <b>${nowShowingJoined}</b>.\n<b>Cast:</b> <i>${m.cast.join(", ")}</i>\n<b>Buy Tickets:</b> ${m.url}`;
     });
     const newoutput = output.map((movie, i) => ({ ...movie, bot_text: nowShowingBotText[i] }));
-
+    console.log(newoutput)
 
     // Write json file
     const outputToJSON = JSON.stringify(newoutput);
