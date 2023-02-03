@@ -27,13 +27,14 @@ const puppeteerLib = require('./lib/puppeteerLib');
             page.waitForNavigation({ waitUntil: 'load' }),
             titles[index].click(),
         ]);
-        if (await page.$('.Sessions')) {
+        const sessionsElem = await page.$('.Sessions:not(.Hidden)') ? true : false;
+        if (sessionsElem) {
             const sessionsToday = await page.evaluate(() => {
                 return Array.from(document.querySelectorAll('.Sessions:not(.Hidden) > li > a > span.Time'), el => el.textContent)
             });
             nowShowingSessions.push(sessionsToday);
         } else {
-            nowShowingSessions.unshift(['no sessions left']);
+            nowShowingSessions.unshift(['no sessions left today']);
         }
         let currURL = page.url();
         movieLinks.push(currURL);
