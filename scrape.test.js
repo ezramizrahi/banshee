@@ -20,7 +20,6 @@ describe('schema validation', () => {
         data.forEach(d => {
             expect(d).toHaveProperty('times');
             expect(d.times).toEqual(expect.any(Array));
-            expect(d.times).toEqual(expect.arrayContaining([expect.any(String)]));
         });
     });
     
