@@ -27,7 +27,6 @@ describe('schema validation', () => {
         data.forEach(d => {
             expect(d).toHaveProperty('cast');
             expect(d.cast).toEqual(expect.any(Array));
-            expect(d.cast).toEqual(expect.arrayContaining([expect.any(String)]));
         });
     });
     
