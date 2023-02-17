@@ -35,8 +35,8 @@ const launchOptions = require('./puppeteer.config.js');
         } else {
             nowShowingSessions.unshift(['no sessions left today']);
         }
-        let currURL = page.url();
-        movieLinks.push(currURL);
+        let currentURL = page.url();
+        movieLinks.push(currentURL);
     }
     // close browser
     await browser.close();
@@ -45,7 +45,7 @@ const launchOptions = require('./puppeteer.config.js');
     let summaries = [];
     let cast = [];
     for (let index = 0; index < movieTitles.length; index++) {
-        const searchResponse = await utils.searchMovieURL(movieTitles[index].trim(), TMDB_URL, API_KEY)
+        const searchResponse = await utils.getMovieDetails(movieTitles[index].trim(), TMDB_URL, API_KEY)
         const movieDetails = searchResponse.data.results.find((r) => r.title.normalize('NFD').replace(/\p{Diacritic}/gu, "").trim() === movieTitles[index].trim());
         const movieSummary = movieDetails ? movieDetails.overview : 'n/a';
         summaries.push(movieSummary);
@@ -68,5 +68,4 @@ const launchOptions = require('./puppeteer.config.js');
             console.log('done');
         }
     });
-    // await utils.writeData(output);
 })();
