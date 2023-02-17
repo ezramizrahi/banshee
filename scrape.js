@@ -3,11 +3,11 @@ const puppeteer = require('puppeteer');
 const fs = require('fs').promises;
 const utils = require('./lib/utils.js');
 const puppeteerLib = require('./lib/puppeteerLib');
-const puppeteerConfig = require('./puppeteer.config.js');
+const launchOptions = require('./puppeteer.config.js');
 
 (async () => {
     const { RITZ_URL, TMDB_URL, API_KEY } = process.env;
-    const { browser, page } = await puppeteerLib.launchWithConfig(puppeteerConfig);
+    const { browser, page } = await puppeteerLib.launchWithOptions(launchOptions);
     const nowShowingURL = await utils.buildURL(RITZ_URL, '/now-showing');
     await page.goto(nowShowingURL, { waitUntil: 'load' });
 
